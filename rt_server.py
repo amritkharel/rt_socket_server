@@ -31,5 +31,11 @@ async def from_client_b(sid, data):
         if client_sid != sid:
             await sio.emit('to_client_a', data, room=client_sid)
 
+@sio.event
+async def from_client_a_to_c(sid, data):
+    for client_sid in clients:
+        if client_sid != sid:
+            await sio.emit('to_client_c', data, room=client_sid)
+
 if __name__ == '__main__':
     web.run_app(app, host='127.0.0.1', port=8000)
